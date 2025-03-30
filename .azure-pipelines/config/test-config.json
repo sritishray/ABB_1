@@ -1,0 +1,5 @@
+{
+    "NODE_ENV": "test",
+    "API_URL": "https://api-test.example.com",
+    "LOG_LEVEL": "info"
+  }

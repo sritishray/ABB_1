@@ -1,0 +1,6 @@
+{
+    "NODE_ENV": "test",
+    "API_URL": "http://localhost:7000",
+    "LOG_LEVEL": "info"
+  }
+  
