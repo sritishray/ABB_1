@@ -1,0 +1,30 @@
+trigger: none  # This pipeline is triggered by build completion
+
+resources:
+  pipelines:
+    - pipeline: Build-pipeline  # Change this to your actual CI pipeline name
+      source: Build-pipeline
+      trigger: true  # Automatically trigger CD when CI completes
+
+stages:
+- stage: Staging
+  displayName: "Deploy to Staging"
+  jobs:
+    - job: WaitForApproval
+      displayName: "Approval Step"
+      steps:
+        - task: ManualValidation@0
+          timeoutInMinutes: 60  # Wait for up to 60 minutes for approval
+          notifyUsers:
+            - "sritish.devops@gmail.com"  # Replace with actual approver email
+          instructions: "Please approve the deployment to Staging."
+
+    - job: DeployStaging
+      displayName: "Deploy App to Staging"
+      dependsOn: WaitForApproval  # Deploy only after approval
+      steps:
+        - task: AzureWebApp@1
+          inputs:
+            azureSubscription: "webappServiceConnection"  # Your Azure Service Connection
+            appName: "my-staging-app"  # Change to your Azure App Service name
+            package: "$(Pipeline.Workspace)/drop/node-app.zip"
