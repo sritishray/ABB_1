@@ -1,0 +1,2 @@
+Description of the issue -- Pods in the AKS cluster are failing to access secrets stored in Azure Key Vault. Despite having enabled the  Workload Identity during cluster creation.
+The pods are unable to retrieve the secrets at runtime. This results in errors such as "access denied" or "unable to authenticate" when the pod tries to fetch the secrets from the Key Vault.
