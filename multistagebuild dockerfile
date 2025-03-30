@@ -1,0 +1,39 @@
+# Build Stage
+FROM openjdk:17-jdk-slim AS build
+
+# Switch to root for installation and setup
+USER root
+
+# Set working directory
+WORKDIR /app
+
+# Copy source code
+COPY HelloWorld.java .
+
+# Compile Java file
+RUN javac HelloWorld.java
+
+
+# Final Stage
+FROM openjdk:17-jdk-slim
+
+# Set working directory
+WORKDIR /app
+
+# Switch to root to create a new user
+USER root
+
+# Create a non-root user with a non-zero UID
+RUN groupadd -g 1001 appgroup && useradd -m -u 1001 -g appgroup appuser
+
+# Copy compiled class file from the build stage
+COPY --from=build /app/HelloWorld.class .
+
+# Change ownership of files
+RUN chown -R appuser:appgroup /app
+
+# Switch to non-root user
+USER appuser
+
+# Run the application
+CMD ["java", "HelloWorld"]
