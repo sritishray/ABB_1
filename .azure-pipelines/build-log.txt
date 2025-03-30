@@ -1,0 +1,19 @@
+##[section]Starting: BuildJob
+##[command]Checkout repository 'my-node-app' at commit 'd3f4b6a'
+##[section]Running: Install Dependencies
+##[command]npm install
+ Dependencies installed successfully.
+##[section]Running: Run Tests
+##[command]npm test
+ All tests passed (12/12).
+##[section]Running: Build Application
+##[command]npm run build
+ Application built successfully.
+##[section]Running: Archive Application
+##[command]zip -r node-app.zip ./
+ Artifact node-app.zip created.
+##[section]Publishing Artifact: drop
+##[command]Uploading artifact (node-app.zip) to Build.ArtifactStagingDirectory
+ Artifact published: drop/node-app.zip
+##[section]Finishing: BuildJob
+ Build completed successfully!
