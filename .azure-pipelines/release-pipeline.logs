@@ -1,0 +1,34 @@
+##[section]Starting: CD Pipeline - Deploy to Staging
+##[command]Triggering deployment from build pipeline 'build-pipeline'
+ Artifact 'drop/node-app.zip' retrieved from CI pipeline.
+##[section]Waiting for Approval
+ Deployment to Staging is pending approval.
+
+ Requested by: Azure DevOps Pipeline
+ Approval required from: srithsh.devops@gmail.com
+ Timeout: 60 minutes
+
+ Instructions: Please verify the changes and approve or reject the deployment.
+
+##[section]Status: Pending Approval...
+Approval received from  sriths.devops@gmail.comat 2025-03-30 10:15 AM UTC
+ Proceeding with deployment to Staging...
+##[section]Starting: DeployStaging
+##[command]Downloading artifact 'drop' from CI pipeline
+ Artifact 'node-app.zip' retrieved.
+
+##[section]Deploying Application to Staging
+##[command]az webapp deployment source config-zip --resource-group my-resource-group --name my-staging-app --src node-app.zip
+ Deployment started...
+ Extracting package...
+ Deploying files to Azure App Service...
+ Deployment completed successfully.
+
+ Application URL: http://my-staging-app.azurewebsites.net
+
+##[section]Finishing: DeployStaging
+ Deployment to Staging completed successfully!
+
+
+
+
