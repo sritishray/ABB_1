@@ -1,0 +1,16 @@
+namespace: abb  
+
+replicaCount: 2
+
+image:
+  repository: devopsmaster.azurecr.io/java-hello-world
+  tag: latest
+  pullPolicy: Always
+
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
