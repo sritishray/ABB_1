@@ -1,0 +1,24 @@
+# Resource Group Details
+resource_group_name = "my-resource-group"
+location           = "East US"
+
+# Virtual Network and Subnet
+vnet_name   = "my-vnet"
+subnet_name = "my-subnet"
+
+# AKS Cluster Configuration
+cluster_name       = "my-aks-cluster"
+kubernetes_version = "1.27.3"  # Example version
+
+# Managed Identity
+identity_type = "SystemAssigned"
+identity_ids  = []  # Leave empty if using SystemAssigned, otherwise provide UserAssigned IDs
+
+# Log Analytics Workspace
+log_analytics_workspace_enabled = true
+
+# ACR Role Assignment
+attached_acr_id_map = {
+  "acr1" = "/subscriptions/xxxxxx/resourceGroups/my-rg/providers/Microsoft.ContainerRegistry/registries/myacr"
+}
+

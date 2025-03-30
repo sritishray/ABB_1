@@ -1,0 +1,44 @@
+PS C:\Users\sriti\hello-world-app> git checkout -b feature/testnodejs
+Switched to a new branch 'feature/testnodejs'
+PS C:\Users\sriti\hello-world-app> git branch
+* feature/testnodejs
+  master
+PS C:\Users\sriti\hello-world-app> ls
+
+
+    Directory: C:\Users\sriti\hello-world-app
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        28-03-2025     21:36                node_modules
+-a----        28-03-2025     21:38            309 index.js
+-a----        28-03-2025     21:39            297 index.test.js
+-a----        28-03-2025     21:36         169142 package-lock.json
+-a----        28-03-2025     21:42            347 package.json
+
+
+PS C:\Users\sriti\hello-world-app> git add .
+PS C:\Users\sriti\hello-world-app> git commit -m "Added test feature"
+On branch feature/testnodejs
+nothing to commit, working tree clean
+git remote add demo-ABB https://sritishdevops@dev.azure.com/sritishdevops/demo-ABB/_git/demo-ABB
+PS C:\Users\sriti\hello-world-app> git remote -v                                                                          
+demo-ABB        https://sritishdevops@dev.azure.com/sritishdevops/demo-ABB/_git/demo-ABB (fetch)
+demo-ABB        https://sritishdevops@dev.azure.com/sritishdevops/demo-ABB/_git/demo-ABB (push)
+PS C:\Users\sriti\hello-world-app>  git push -u demo-ABB feature/testnodejs
+>>
+Enumerating objects: 5359, done.
+Counting objects: 100% (5359/5359), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (5142/5142), done.
+Writing objects: 100% (5359/5359), 6.16 MiB | 3.55 MiB/s, done.
+Total 5359 (delta 1117), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Analyzing objects... (5359/5359) (1324 ms)
+remote: Validating commits... (1/1) done (16 ms)
+remote: Storing packfile... done (197 ms)
+remote: Storing index... done (63 ms)
+To https://dev.azure.com/sritishdevops/demo-ABB/_git/demo-ABB
+ * [new branch]      feature/testnodejs -> feature/testnodejs
+branch 'feature/testnodejs' set up to track 'demo-ABB/feature/testnodejs'.
+PS C:\Users\sriti\hello-world-app>  
