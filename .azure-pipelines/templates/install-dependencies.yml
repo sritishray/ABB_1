@@ -1,0 +1,9 @@
+steps:
+  - task: UseNode@1
+    inputs:
+      version: '18.x'
+    displayName: 'Use Node.js'
+
+  - script: |
+      npm install
+    displayName: 'Install dependencies'

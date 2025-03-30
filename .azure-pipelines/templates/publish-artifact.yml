@@ -1,0 +1,6 @@
+steps:
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: 'output'  # Change 'dist' to 'output' or any other directory
+      artifactName: 'drop'
+    displayName: 'Publish Build Artifacts'
