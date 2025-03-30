@@ -1,0 +1,76 @@
+#We want to access a secret from Azure Key Vault using Workload Identity with an Azure Kubernetes Service (AKS) cluster.
+1. Export OIDC Issuer URL from AKS Cluster
+First, retrieve the OpenID Connect (OIDC) issuer URL from the AKS cluster. This URL will be used for workload identity authentication.
+
+Command to export OIDC issuer URL:
+kubectl config use-context <aks-cluster-name>
+AKS_OIDC_ISSUER=$(az aks show --resource-group <resource-group-name> --name <aks-cluster-name> --query "oidcIssuerProfile.issuerUrl" -o tsv)
+echo $AKS_OIDC_ISSUER
+
+2. Create a User-Managed Identity (UMI)
+Create a user-managed identity (UMI) in Azure, and get the client ID.
+
+Command to create a UMI:
+# To create the managed identity.
+az identity create --resource-group <resource-group-name> --name <identity-name>
+
+# Get the client ID of the managed identity
+CLIENT_ID=$(az identity show --resource-group <resource-group-name> --name <identity-name> --query 'clientId' -o tsv)
+echo $CLIENT_ID
+
+
+3. Grant Managed Identity Access to the Azure Key Vault
+Next, grant the UMI access to your Azure Key Vault. You will need to assign appropriate permissions like "Get" or "List" for the secrets.
+
+Command to grant access to the Key Vault:
+az keyvault set-policy --name <keyvault-name> --spn $CLIENT_ID --secret-permissions get list
+
+4. Set Access Policies in the Key Vault
+Make sure to configure the necessary access policies for the managed identity so it can read the secret from the Key Vault.
+
+Command to set access policy:
+az keyvault set-policy --name <keyvault-name> --spn $CLIENT_ID --secret-permissions get
+
+5. Create Service Account (SA) with Annotation for Workload Identity
+Now, create a service account in the AKS cluster and add an annotation for the managed identity. This annotation will associate the managed identity with the service account, allowing your pod to access it.
+
+Create Service Account (SA) with annotation:
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: <service-account-name>
+  annotations:
+    azure.workload.identity/clientID: <client-id>
+
+kubectl apply -f service-account.yaml
+
+6. Create an OIDC Issuer for the Service Account
+Next, you will configure the OIDC identity provider for the service account.
+
+Command to create OIDC issuer:
+6. Create an OIDC Issuer for the Service Account
+Next, you will configure the OIDC identity provider for the service account.
+
+Command to create OIDC issuer:
+az aks update --resource-group <resource-group-name> --name <aks-cluster-name> --enable-oidc-issuer
+
+7. Create a Pod Using the Service Account to Access the Key Vault Secret
+Now, create a pod in the AKS cluster that uses the service account to access the secret from the Azure Key Vault.
+
+Pod YAML Example:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <pod-name>
+spec:
+  serviceAccountName: <service-account-name>
+  containers:
+    - name: <container-name>
+      image: <container-image>
+      env:
+        - name: SECRET_NAME
+          value: "<secret-name>"
+        - name: KEYVAULT_NAME
+          value: "<keyvault-name>"
+kubectl apply -f pod.yaml
+Kubectl logs -f <pod-name> -n <ns-name>
