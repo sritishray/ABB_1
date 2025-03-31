@@ -1,0 +1,6 @@
+// Query to analyze application logs for error patterns in the last 24 hours
+AppTraces
+| where TimeGenerated > ago(24h)  // Filter logs from the last 24 hours
+| where Level == "Error"          // Filter for logs with "Error" level (adjust if needed)
+| summarize Count = count() by bin(TimeGenerated, 1h), ErrorMessage  // Group by 1 hour bins and error message
+| order by TimeGenerated desc  // Order by most recent time
