@@ -44,10 +44,7 @@ metadata:
 
 kubectl apply -f service-account.yaml
 
-6. Create an OIDC Issuer for the Service Account
-Next, you will configure the OIDC identity provider for the service account.
 
-Command to create OIDC issuer:
 6. Create an OIDC Issuer for the Service Account
 Next, you will configure the OIDC identity provider for the service account.
 
